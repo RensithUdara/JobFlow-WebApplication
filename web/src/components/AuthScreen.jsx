@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Activity, Eye, EyeOff, LogIn } from "lucide-react";
+import { Eye, EyeOff, LogIn } from "lucide-react";
+import { BrandLogo } from "./BrandLogo.jsx";
 
 export function AuthScreen({ onAuth, notice, error, setNotice, setError }) {
   const [name, setName] = useState("");
@@ -36,13 +37,7 @@ export function AuthScreen({ onAuth, notice, error, setNotice, setError }) {
   return (
     <main className="auth-layout">
       <section className="auth-panel">
-        <div className="brand large">
-          <div className="brand-mark"><Activity size={24} /></div>
-          <div>
-            <h1>JobFlow</h1>
-            <span>Background jobs, workers, retries, queues</span>
-          </div>
-        </div>
+        <BrandLogo large />
         <form onSubmit={submit}>
           <div className="segmented">
             <button type="button" className={mode === "login" ? "selected" : ""} onClick={() => setMode("login")}>Login</button>
