@@ -611,6 +611,79 @@ textarea {
 .secondary.danger { color: #9d2d2d; background: #fdeaea; }
 .button-row { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
 
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(5, 31, 30, .42);
+  backdrop-filter: blur(8px);
+}
+.confirm-dialog {
+  position: relative;
+  width: min(430px, 100%);
+  padding: 24px;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #dcebf0;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 28px 80px rgba(8, 47, 43, .24);
+}
+.confirm-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+.confirm-icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: #0d8b5e;
+  background: #e6f9f0;
+}
+.confirm-danger .confirm-icon {
+  color: #c73737;
+  background: #fdeaea;
+}
+.confirm-warning .confirm-icon {
+  color: #0b4c76;
+  background: #e7f1ff;
+}
+.confirm-copy h3 {
+  margin: 16px 0 8px;
+  color: #073151;
+  font-size: 22px;
+  line-height: 1.15;
+}
+.confirm-copy p {
+  margin: 0;
+  color: #52708a;
+  line-height: 1.55;
+}
+.confirm-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 22px;
+}
+.confirm-actions .primary,
+.confirm-actions .secondary {
+  min-height: 46px;
+  margin-top: 0;
+  font-weight: 800;
+}
+.danger-primary {
+  background: linear-gradient(135deg, #e14c4c, #b92f2f);
+  box-shadow: 0 12px 24px rgba(185, 47, 47, .22);
+}
+
 .toolbar {
   display: grid;
   grid-template-columns: minmax(220px, 1fr) 132px 132px 124px 108px;
@@ -1093,6 +1166,25 @@ button.row:hover, button.row.selected { background: #edf8f5; }
 }
 .theme-dark .queue-arrow {
   color: #9db2ad;
+}
+.theme-dark .confirm-dialog {
+  background: rgba(20, 31, 29, .98);
+  border-color: #2b3d39;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .38);
+}
+.theme-dark .confirm-copy h3 {
+  color: #edf4ef;
+}
+.theme-dark .confirm-copy p {
+  color: #9db2ad;
+}
+.theme-dark .confirm-warning .confirm-icon {
+  color: #8fc5ff;
+  background: #132d42;
+}
+.theme-dark .confirm-danger .confirm-icon {
+  color: #ff9f9f;
+  background: #3a1e1e;
 }
 
 @media (max-width: 1320px) {
