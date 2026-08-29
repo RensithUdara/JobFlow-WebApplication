@@ -3,6 +3,7 @@ import { ActivityFeed } from "../components/ActivityFeed.jsx";
 import { CommandBar } from "../components/CommandBar.jsx";
 import { HealthPanel } from "../components/HealthPanel.jsx";
 import { InsightCards } from "../components/InsightCards.jsx";
+import { JobAnalytics } from "../components/JobAnalytics.jsx";
 import { JobComposer } from "../components/JobComposer.jsx";
 import { JobDetails } from "../components/JobDetails.jsx";
 import { JobTable } from "../components/JobTable.jsx";
@@ -28,6 +29,7 @@ export function DashboardView(props) {
       <StatsStrip stats={props.stats} health={props.health} />
       <InsightCards jobs={props.jobs} stats={props.stats} />
       <HealthPanel stats={props.stats} health={props.health} />
+      <JobAnalytics jobs={props.jobs} />
       <div className="main-grid">
         <JobComposer onCreate={props.createJobs} />
         <div className="stack">
