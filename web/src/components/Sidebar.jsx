@@ -1,5 +1,5 @@
 import React from "react";
-import { Activity, BriefcaseBusiness, Clock, LogOut, RadioTower, Settings, Workflow } from "lucide-react";
+import { Activity, BriefcaseBusiness, CheckCircle2, Clock, LogOut, RadioTower, Settings, Workflow } from "lucide-react";
 
 const items = [
   ["dashboard", "Dashboard", Activity],
@@ -26,6 +26,10 @@ export function Sidebar({ activeView, onNavigate, onSignOut }) {
           </button>
         ))}
       </nav>
+      <div className="system-card">
+        <div><CheckCircle2 size={16} /><strong>System Online</strong></div>
+        <span>All services operational</span>
+      </div>
       <button className="ghost wide" onClick={onSignOut}><LogOut size={16} /> Sign out</button>
     </aside>
   );
