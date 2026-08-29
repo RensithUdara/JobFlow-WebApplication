@@ -7,7 +7,7 @@ export function QueueBoard({ stats }) {
 
   return (
     <section className="panel queue-board">
-      <div className="panel-title"><GitBranch size={18} /><h3>Queue Depth</h3></div>
+      <div className="panel-title"><GitBranch size={18} /><div><h3>Queue Depth</h3><span>Jobs waiting in each queue</span></div></div>
       <div className="queue-list">
         {queues.map((queue) => (
           <div className="queue-card" key={queue.name}>
