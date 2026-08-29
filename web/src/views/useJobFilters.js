@@ -15,7 +15,7 @@ export function useJobFilters(jobs) {
     const filtered = jobs.filter((job) => {
       const matchesStatus = filters.status === "all" || job.status === filters.status;
       const matchesQueue = filters.queue === "all" || job.queue === filters.queue;
-      const searchable = `${job.id} ${job.type} ${job.queue} ${job.status}`.toLowerCase();
+      const searchable = `${job.type} ${job.queue} ${job.status}`.toLowerCase();
       return matchesStatus && matchesQueue && (!query || searchable.includes(query));
     });
 
