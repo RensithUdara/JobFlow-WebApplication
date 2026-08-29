@@ -49,7 +49,7 @@ export function JobTable({
   return (
     <section className="panel table-panel">
       <div className="panel-title split">
-        <div><h3>Jobs</h3><span>{allJobs.length} matched</span></div>
+        <div><h3>Jobs</h3><span>Manage and monitor all jobs</span></div>
         <div className="button-row">
           <button className="secondary" onClick={() => onExport(selectedJobs.length ? selectedJobs : allJobs)}><Download size={15} /> Export</button>
           <button className="secondary" disabled={!selectedJobs.length} onClick={bulkRetry}><RotateCcw size={15} /> Retry</button>
