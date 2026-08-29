@@ -10,6 +10,7 @@ import { QueuesView } from "./views/QueuesView.jsx";
 import { SettingsView } from "./views/SettingsView.jsx";
 import { WorkersView } from "./views/WorkersView.jsx";
 import { useJobFlow } from "./hooks/useJobFlow.js";
+import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts.js";
 
 export function App() {
   const jobFlow = useJobFlow();
@@ -18,6 +19,7 @@ export function App() {
   const [theme, setTheme] = useState(localStorage.getItem("jobflow_theme") || "light");
   const [confirm, setConfirm] = useState(null);
   const [confirmBusy, setConfirmBusy] = useState(false);
+  useKeyboardShortcuts({ onRefresh: jobFlow.refresh });
 
   const viewTitle = useMemo(() => ({
     dashboard: "Operations Dashboard",
