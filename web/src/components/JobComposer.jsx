@@ -40,8 +40,11 @@ export function JobComposer({ onCreate }) {
   return (
     <section className="panel composer">
       <div className="panel-title">
-        <Plus size={18} />
-        <h3>Create Job</h3>
+        <div className="title-icon"><Plus size={18} /></div>
+        <div>
+          <h3>Create Job</h3>
+          <span>Add a new job to the queue</span>
+        </div>
       </div>
       <div className="template-grid">
         {types.map((item) => (
@@ -66,7 +69,7 @@ export function JobComposer({ onCreate }) {
         </div>
         <label className="payload-editor">Payload JSON<textarea value={payloadText} onChange={(event) => setPayloadText(event.target.value)} /></label>
         {jsonError && <div className="inline-error">{jsonError}</div>}
-        <button className="primary"><Send size={16} /> Enqueue</button>
+        <button className="primary submit-right"><Send size={16} /> Enqueue Job</button>
       </form>
     </section>
   );
