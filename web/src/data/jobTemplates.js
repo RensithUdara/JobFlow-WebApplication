@@ -23,13 +23,13 @@ export const jobTemplates = {
     label: "Send Notification",
     queue: "default",
     priority: 6,
-    payload: { user_id: "usr_123", message: "Your report is ready" },
+    payload: { recipient: "Rensith Udara", message: "Your report is ready" },
   },
   generate_report: {
     label: "Generate Report",
     queue: "reports",
     priority: 2,
-    payload: { report: "monthly_revenue", format: "pdf", account_id: "acct_001" },
+    payload: { report: "monthly_revenue", format: "pdf", account: "Operations Team" },
   },
   send_webhook: {
     label: "Send Webhook",
