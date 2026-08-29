@@ -5,7 +5,7 @@ import { JobTable } from "../components/JobTable.jsx";
 import { useJobFilters } from "./useJobFilters.js";
 
 export function JobsView(props) {
-  const { filteredJobs, filters, setFilters } = useJobFilters(props.jobs);
+  const { filteredJobs, allFilteredJobs, filters, setFilters, pageCount } = useJobFilters(props.jobs);
 
   return (
     <div className="jobs-layout">
@@ -13,6 +13,7 @@ export function JobsView(props) {
       <div className="content-grid">
         <JobTable
           jobs={filteredJobs}
+          allJobs={allFilteredJobs}
           selectedJob={props.selectedJob}
           onSelect={props.setSelectedJob}
           onRetry={props.retryJob}
@@ -20,6 +21,7 @@ export function JobsView(props) {
           filters={filters}
           onFiltersChange={setFilters}
           onExport={props.exportJobs}
+          pageCount={pageCount}
         />
         <JobDetails job={props.selectedJob || filteredJobs[0]} />
       </div>
