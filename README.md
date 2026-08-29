@@ -75,6 +75,22 @@
 
 ---
 
+## 📚 Documentation
+
+| File | Description |
+| --- | --- |
+| [`docs/SETUP.md`](docs/SETUP.md) | Full local and Docker setup guide |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System architecture and job lifecycle |
+| [`docs/API.md`](docs/API.md) | API endpoint reference and examples |
+| [`docs/FRONTEND.md`](docs/FRONTEND.md) | React app structure, views, and UI behavior |
+| [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) | Common setup and runtime fixes |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution workflow and checklist |
+| [`CHANGELOG.md`](CHANGELOG.md) | Project change history |
+| [`SECURITY.md`](SECURITY.md) | Security policy and production checklist |
+| [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Community standards |
+
+---
+
 ## 📁 Project Structure
 
 ```text
@@ -496,4 +512,3 @@ docker compose down -v
 ## 📄 License
 
 This project is for learning, portfolio, and backend/frontend practice. Add your preferred license before publishing publicly.
-
