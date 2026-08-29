@@ -1,5 +1,6 @@
 import React from "react";
 import { CalendarClock, Copy, Square } from "lucide-react";
+import { JobTimeline } from "./JobTimeline.jsx";
 import { StatusBadge } from "./StatusBadge.jsx";
 
 export function JobDetails({ job }) {
@@ -35,6 +36,7 @@ export function JobDetails({ job }) {
         <dt>Completed</dt><dd>{job.completed_at ? new Date(job.completed_at).toLocaleString() : "Not completed"}</dd>
         <dt>Error</dt><dd>{job.error_message || "None"}</dd>
       </dl>
+      <JobTimeline job={job} />
       <pre className="payload">{JSON.stringify(job.payload, null, 2)}</pre>
     </section>
   );
