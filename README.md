@@ -14,6 +14,20 @@ Distributed background job queue and worker system built with Go, Gin, PostgreSQ
 - Worker heartbeat tracking
 - Server-Sent Events for dashboard refreshes
 - React operations dashboard
+- Multi-view dashboard with Jobs, Queues, Workers, and Settings
+- Editable payload JSON, job templates, scheduled jobs, forced retry testing, and batch creation
+- Client-side search, status/queue filters, job export, activity feed, queue depth bars, and worker cards
+
+## Frontend structure
+
+```text
+web/src/
+  api/           API client and export helpers
+  components/    Reusable dashboard components
+  data/          Job templates and option lists
+  hooks/         JobFlow state and realtime data hook
+  views/         Dashboard, Jobs, Queues, Workers, Settings screens
+```
 
 ## Run locally
 
