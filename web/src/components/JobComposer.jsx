@@ -1,8 +1,12 @@
-import React, { useMemo, useState } from "react";
-import { ClipboardList, Plus, Send } from "lucide-react";
+import React, { useMemo, useRef, useState } from "react";
+import { ClipboardList, FileUp, Plus, Save, Send } from "lucide-react";
 import { jobTemplates, queueOptions } from "../data/jobTemplates.js";
+import { JobDraftsPanel } from "./JobDraftsPanel.jsx";
+import { useJobDrafts } from "../hooks/useJobDrafts.js";
 
 export function JobComposer({ onCreate }) {
+  const fileInputRef = useRef(null);
+  const { drafts, saveDraft, deleteDraft, clearDrafts } = useJobDrafts();
   const [type, setType] = useState("send_email");
   const [queue, setQueue] = useState(jobTemplates.send_email.queue);
   const [priority, setPriority] = useState(jobTemplates.send_email.priority);
@@ -15,6 +19,19 @@ export function JobComposer({ onCreate }) {
 
   const types = useMemo(() => Object.keys(jobTemplates), []);
 
+  function currentDraft() {
+    return {
+      type,
+      queue,
+      priority,
+      maxAttempts,
+      forceFail,
+      scheduledAt,
+      batchCount,
+      payloadText,
+    };
+  }
+
   function chooseTemplate(nextType) {
     const template = jobTemplates[nextType];
     setType(nextType);
@@ -22,6 +39,55 @@ export function JobComposer({ onCreate }) {
     setPriority(template.priority);
     setPayloadText(JSON.stringify(template.payload, null, 2));
     setJsonError("");
+  }
+
+  function loadDraft(draft) {
+    setType(draft.type);
+    setQueue(draft.queue);
+    setPriority(draft.priority);
+    setMaxAttempts(draft.maxAttempts);
+    setForceFail(Boolean(draft.forceFail));
+    setScheduledAt(draft.scheduledAt || "");
+    setBatchCount(draft.batchCount || 1);
+    setPayloadText(draft.payloadText || "{}");
+    setJsonError("");
+  }
+
+  function handleSaveDraft() {
+    try {
+      JSON.parse(payloadText || "{}");
+      saveDraft(currentDraft());
+      setJsonError("");
+    } catch (err) {
+      setJsonError(err.message);
+    }
+  }
+
+  async function importJobFile(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      const job = Array.isArray(data) ? data[0] : data;
+      const nextType = job.type && jobTemplates[job.type] ? job.type : type;
+      const template = jobTemplates[nextType];
+
+      setType(nextType);
+      setQueue(job.queue || template.queue);
+      setPriority(job.priority ?? template.priority);
+      setMaxAttempts(job.max_attempts || job.maxAttempts || maxAttempts);
+      setBatchCount(job.batchCount || 1);
+      setScheduledAt(job.scheduled_at ? job.scheduled_at.slice(0, 16) : "");
+      setForceFail(Boolean(job.payload?.force_fail));
+      setPayloadText(JSON.stringify(job.payload || job, null, 2));
+      setJsonError("");
+    } catch (err) {
+      setJsonError(err.message);
+    } finally {
+      event.target.value = "";
+    }
   }
 
   async function submit(event) {
@@ -53,6 +119,11 @@ export function JobComposer({ onCreate }) {
           </button>
         ))}
       </div>
+      <div className="composer-actions">
+        <button className="secondary" type="button" onClick={handleSaveDraft}><Save size={15} /> Save draft</button>
+        <button className="secondary" type="button" onClick={() => fileInputRef.current?.click()}><FileUp size={15} /> Import JSON</button>
+        <input ref={fileInputRef} className="hidden-file" type="file" accept="application/json,.json" onChange={importJobFile} />
+      </div>
       <form onSubmit={submit}>
         <div className="form-grid">
           <label>Type<select value={type} onChange={(event) => chooseTemplate(event.target.value)}>
@@ -71,6 +142,7 @@ export function JobComposer({ onCreate }) {
         {jsonError && <div className="inline-error">{jsonError}</div>}
         <button className="primary submit-right"><Send size={16} /> Enqueue Job</button>
       </form>
+      <JobDraftsPanel drafts={drafts} onLoad={loadDraft} onDelete={deleteDraft} onClear={clearDrafts} />
     </section>
   );
 }
