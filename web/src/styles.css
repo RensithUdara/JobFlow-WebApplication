@@ -9,6 +9,12 @@
 body { margin: 0; min-width: 320px; }
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible {
+  outline: none;
+}
 
 .app-shell {
   height: 100vh;
@@ -129,6 +135,13 @@ nav button:hover, nav button.active {
 }
 .search-box svg { margin-left: 12px; }
 .search-box input { border: 0; background: transparent; padding-left: 0; }
+.search-box:focus-within {
+  border-color: #55c79a;
+  box-shadow: 0 0 0 3px rgba(17, 168, 112, .14), 0 12px 32px rgba(22, 73, 94, .07);
+}
+.search-box input:focus {
+  box-shadow: none;
+}
 
 .icon-button {
   width: 42px;
@@ -527,6 +540,12 @@ input, select, textarea {
   padding: 0 10px;
   background: rgba(255, 255, 255, .88);
   color: #0b2742;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #55c79a;
+  box-shadow: 0 0 0 3px rgba(17, 168, 112, .14);
 }
 select {
   appearance: none;
