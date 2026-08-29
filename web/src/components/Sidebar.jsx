@@ -1,5 +1,6 @@
 import React from "react";
-import { Activity, BriefcaseBusiness, CheckCircle2, Clock, LogOut, RadioTower, Settings, Workflow } from "lucide-react";
+import { Activity, BriefcaseBusiness, CheckCircle2, LogOut, RadioTower, Settings, Workflow } from "lucide-react";
+import { BrandLogo } from "./BrandLogo.jsx";
 
 const items = [
   ["dashboard", "Dashboard", Activity],
@@ -12,13 +13,7 @@ const items = [
 export function Sidebar({ activeView, onNavigate, onSignOut }) {
   return (
     <aside className="sidebar">
-      <div className="brand">
-        <div className="brand-mark"><Clock size={20} /></div>
-        <div>
-          <h1>JobFlow</h1>
-          <span>Queue operations console</span>
-        </div>
-      </div>
+      <BrandLogo />
       <nav>
         {items.map(([key, label, Icon]) => (
           <button key={key} className={activeView === key ? "active" : ""} onClick={() => onNavigate(key)}>
