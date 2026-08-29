@@ -273,6 +273,106 @@ nav button:hover, nav button.active {
 .content-grid { grid-template-columns: minmax(0, 1.45fr) minmax(340px, .55fr); }
 .jobs-layout, .stack { display: grid; gap: 16px; }
 
+.queues-view {
+  display: grid;
+  gap: 10px;
+}
+.queue-monitor-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, .8fr);
+  gap: 26px;
+}
+.queue-board-detailed,
+.type-chart-detailed {
+  min-height: 680px;
+  padding: 18px;
+}
+.panel-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+}
+.queue-board-detailed .panel-title,
+.type-chart-detailed .panel-title {
+  margin-bottom: 24px;
+}
+.queue-board-detailed .queue-list {
+  gap: 16px;
+}
+.queue-board-detailed .queue-card {
+  position: relative;
+  min-height: 86px;
+  padding: 16px 58px 16px 18px;
+  display: grid;
+  align-content: center;
+}
+.queue-board-detailed .queue-card div:first-child {
+  margin-bottom: 12px;
+}
+.queue-board-detailed .queue-card strong {
+  color: #082b52;
+  font-size: 17px;
+}
+.queue-board-detailed .queue-card span {
+  font-size: 16px;
+}
+.queue-board-detailed .bar {
+  height: 14px;
+}
+.queue-arrow {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #466a85;
+}
+.queue-board-detailed .dlq-card {
+  min-height: 60px;
+  margin-top: 20px;
+  padding: 0 18px;
+  justify-content: space-between;
+  color: #b36b00;
+  background: linear-gradient(90deg, #fff8e6, #fff2ce);
+  border-color: #f5dc99;
+}
+.queue-board-detailed .dlq-card strong {
+  margin-right: auto;
+}
+.queue-board-detailed .dlq-card span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+}
+.type-chart-detailed .type-row {
+  min-height: 78px;
+  grid-template-columns: 140px minmax(160px, 1fr) 44px 66px;
+  padding: 0 16px;
+  border: 1px solid #e0edf2;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .66);
+  margin-bottom: 16px;
+}
+.type-chart-detailed .type-row span {
+  color: #082b52;
+  font-weight: 800;
+}
+.type-chart-detailed .type-row strong {
+  color: #082b52;
+  font-size: 18px;
+}
+.type-chart-detailed .type-row em {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #d9f8e9;
+  color: #078250;
+  font-style: normal;
+  font-weight: 900;
+}
+
 .view-heading {
   min-height: 58px;
   display: flex;
@@ -292,6 +392,17 @@ nav button:hover, nav button.active {
   margin: 7px 0 0;
   color: #536f89;
   font-size: 16px;
+}
+.signed-line {
+  margin-top: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #315f82;
+  font-size: 15px;
+}
+.signed-line svg {
+  color: #246c8e;
 }
 .refresh-button {
   color: #087250;
@@ -946,12 +1057,16 @@ button.row:hover, button.row.selected { background: #edf8f5; }
 .theme-dark .worker-empty-state h3,
 .theme-dark .settings-title h3,
 .theme-dark .settings-grid label strong,
+.theme-dark .queue-board-detailed .queue-card strong,
+.theme-dark .type-chart-detailed .type-row span,
+.theme-dark .type-chart-detailed .type-row strong,
 .theme-dark .worker-row,
 .theme-dark .worker-row.head,
 .theme-dark .workers-footer {
   color: #edf4ef;
 }
 .theme-dark .view-heading p,
+.theme-dark .signed-line,
 .theme-dark .worker-metric span,
 .theme-dark .worker-metric small,
 .theme-dark .workers-table-header span,
@@ -969,20 +1084,30 @@ button.row:hover, button.row.selected { background: #edf8f5; }
 .theme-dark .workers-table-header,
 .theme-dark .worker-row,
 .theme-dark .worker-empty-state,
-.theme-dark .settings-actions {
+.theme-dark .settings-actions,
+.theme-dark .type-chart-detailed .type-row {
   border-color: #263733;
+}
+.theme-dark .type-chart-detailed .type-row {
+  background: rgba(20, 31, 29, .92);
+}
+.theme-dark .queue-arrow {
+  color: #9db2ad;
 }
 
 @media (max-width: 1320px) {
   .stats-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .worker-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .queue-monitor-grid { grid-template-columns: 1fr; }
+  .queue-board-detailed,
+  .type-chart-detailed { min-height: auto; }
 }
 
 @media (max-width: 1180px) {
   .command-bar { margin: 0 0 16px; width: 100%; }
   .stats-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .insight-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .main-grid, .content-grid { grid-template-columns: 1fr; }
+  .main-grid, .content-grid, .queue-monitor-grid { grid-template-columns: 1fr; }
   .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
