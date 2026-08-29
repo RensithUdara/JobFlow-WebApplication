@@ -6,7 +6,9 @@ export function WorkerBoard({ stats }) {
 
   return (
     <section className="panel worker-board">
-      <div className="panel-title"><RadioTower size={18} /><h3>Workers</h3></div>
+      <div className="panel-title split">
+        <div className="title-inline"><RadioTower size={18} /><div><h3>Workers</h3><span>Worker heartbeat status</span></div></div>
+      </div>
       <div className="worker-grid">
         {workers.map((worker) => (
           <div className="worker-card" key={worker.id}>
