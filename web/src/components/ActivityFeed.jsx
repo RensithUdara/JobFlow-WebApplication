@@ -9,7 +9,7 @@ export function ActivityFeed({ events }) {
         {events.map((event, index) => (
           <div className="event-row" key={`${event.event}-${index}`}>
             <span>{event.event}</span>
-            <code>{event.data?.id || event.data?.type || "system"}</code>
+            <code>{event.data?.type || event.data?.queue || "Job update"}</code>
           </div>
         ))}
         {events.length === 0 && <p className="empty">No realtime events received yet.</p>}
