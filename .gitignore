@@ -1,0 +1,6 @@
+.env
+*.exe
+*.test
+
+web/node_modules/
+web/dist/
