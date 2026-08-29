@@ -1,4 +1,5 @@
 import React from "react";
+import { JobAnalytics } from "../components/JobAnalytics.jsx";
 import { JobComposer } from "../components/JobComposer.jsx";
 import { JobDetails } from "../components/JobDetails.jsx";
 import { JobTable } from "../components/JobTable.jsx";
@@ -9,6 +10,7 @@ export function JobsView(props) {
 
   return (
     <div className="jobs-layout">
+      <JobAnalytics jobs={props.jobs} />
       <JobComposer onCreate={props.createJobs} />
       <div className="content-grid">
         <JobTable
