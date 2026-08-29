@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { API_URL, api, downloadJson } from "../api/client.js";
+import { jobDisplayName } from "../utils/format.js";
 
 const tokenKey = "jobflow_token";
 
@@ -74,7 +75,7 @@ export function useJobFlow() {
       if (form.scheduledAt) body.scheduled_at = new Date(form.scheduledAt).toISOString();
       created.push(await api("/api/jobs", { method: "POST", body: JSON.stringify(body) }, token));
     }
-    setNotice(count === 1 ? `Queued ${created[0].type}` : `Queued ${created.length} jobs`);
+    setNotice(count === 1 ? `Queued ${jobDisplayName(created[0])}` : `Queued ${created.length} jobs`);
     await refresh();
   }
 
