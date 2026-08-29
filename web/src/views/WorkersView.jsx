@@ -10,7 +10,7 @@ export function WorkersView({ stats, refresh, loading }) {
     const cleanQuery = query.trim().toLowerCase();
     return workers.filter((worker) => {
       const matchesStatus = status === "all" || worker.status === status;
-      const searchable = `${worker.id} ${worker.hostname} ${worker.status}`.toLowerCase();
+      const searchable = `${worker.hostname} ${worker.status}`.toLowerCase();
       return matchesStatus && (!cleanQuery || searchable.includes(cleanQuery));
     });
   }, [workers, query, status]);
@@ -63,7 +63,7 @@ export function WorkersView({ stats, refresh, loading }) {
         <div className="worker-table">
           <div className="worker-row head">
             <span><input type="checkbox" /></span>
-            <span>Worker ID</span>
+            <span>Worker Name</span>
             <span>Status</span>
             <span>Current Job</span>
             <span>Queues</span>
@@ -75,7 +75,7 @@ export function WorkersView({ stats, refresh, loading }) {
           {filteredWorkers.map((worker) => (
             <div className="worker-row" key={worker.id}>
               <span><input type="checkbox" /></span>
-              <strong>{worker.hostname || worker.id.slice(0, 8)}</strong>
+              <strong>{worker.hostname || "Worker"}</strong>
               <span className={`worker-pill ${worker.status}`}>{worker.status}</span>
               <span>Idle</span>
               <span>default</span>
