@@ -83,8 +83,8 @@ func main() {
 	protected.POST("/jobs/:id/cancel", jobHandler.Cancel)
 	protected.POST("/jobs/:id/retry", jobHandler.Retry)
 	protected.GET("/dashboard", jobHandler.Dashboard)
-	protected.GET("/queues", jobHandler.Dashboard)
-	protected.GET("/workers", jobHandler.Dashboard)
+	protected.GET("/queues", jobHandler.Queues)
+	protected.GET("/workers", jobHandler.Workers)
 
 	log.Printf("JobFlow API listening on :%s", cfg.ServerPort)
 	log.Fatal(router.Run(":" + cfg.ServerPort))
