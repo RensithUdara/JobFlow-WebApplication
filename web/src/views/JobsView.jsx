@@ -18,6 +18,7 @@ export function JobsView(props) {
           onSelect={props.setSelectedJob}
           onRetry={props.retryJob}
           onCancel={props.cancelJob}
+          onConfirm={props.requestConfirm}
           filters={filters}
           onFiltersChange={setFilters}
           onExport={props.exportJobs}
