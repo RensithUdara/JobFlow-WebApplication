@@ -7,7 +7,7 @@ export function TypeChart({ stats }) {
 
   return (
     <section className="panel type-chart">
-      <div className="panel-title"><PieChart size={18} /><h3>Job Types</h3></div>
+      <div className="panel-title"><PieChart size={18} /><div><h3>Job Types</h3><span>Distribution by processor</span></div></div>
       {entries.map(([type, count]) => (
         <div className="type-row" key={type}>
           <span>{type}</span>
