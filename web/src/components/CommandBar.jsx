@@ -7,7 +7,7 @@ export function CommandBar({ filters, onFiltersChange, onRefresh, onExport, onFo
       <div className="search-box">
         <Search size={17} />
         <input
-          placeholder="Search jobs, queues, ids"
+          placeholder="Search jobs, queues, status"
           value={filters.query}
           onChange={(event) => onFiltersChange({ ...filters, query: event.target.value })}
         />
