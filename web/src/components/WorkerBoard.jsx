@@ -12,7 +12,7 @@ export function WorkerBoard({ stats }) {
       <div className="worker-grid">
         {workers.map((worker) => (
           <div className="worker-card" key={worker.id}>
-            <div className="worker-head"><span className={`dot ${worker.status}`} /><strong>{worker.hostname || worker.id.slice(0, 8)}</strong></div>
+            <div className="worker-head"><span className={`dot ${worker.status}`} /><strong>{worker.hostname || "Worker"}</strong></div>
             <span>{worker.status}</span>
             <div className="worker-stats">
               <span><Cpu size={14} /> {worker.jobs_processed} processed</span>
