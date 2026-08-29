@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { AuthScreen } from "./components/AuthScreen.jsx";
+import { ConfirmDialog } from "./components/ConfirmDialog.jsx";
 import { Sidebar } from "./components/Sidebar.jsx";
 import { Toast } from "./components/Toast.jsx";
 import { Topbar } from "./components/Topbar.jsx";
@@ -15,6 +16,8 @@ export function App() {
   const [activeView, setActiveView] = useState("dashboard");
   const [density, setDensity] = useState(localStorage.getItem("jobflow_density") || "comfortable");
   const [theme, setTheme] = useState(localStorage.getItem("jobflow_theme") || "light");
+  const [confirm, setConfirm] = useState(null);
+  const [confirmBusy, setConfirmBusy] = useState(false);
 
   const viewTitle = useMemo(() => ({
     dashboard: "Operations Dashboard",
@@ -34,6 +37,36 @@ export function App() {
     setTheme(nextTheme);
   }
 
+  function requestConfirm(options) {
+    setConfirm(options);
+  }
+
+  function closeConfirm() {
+    if (confirmBusy) return;
+    setConfirm(null);
+  }
+
+  async function runConfirmAction() {
+    if (!confirm?.onConfirm) return;
+    setConfirmBusy(true);
+    try {
+      await confirm.onConfirm();
+      setConfirm(null);
+    } finally {
+      setConfirmBusy(false);
+    }
+  }
+
+  function confirmSignOut() {
+    requestConfirm({
+      title: "Sign out?",
+      message: "Your current session will close on this device. You can sign in again anytime.",
+      confirmLabel: "Sign out",
+      variant: "warning",
+      onConfirm: jobFlow.signOut,
+    });
+  }
+
   if (!jobFlow.authed) {
     return (
       <AuthScreen
@@ -48,15 +81,15 @@ export function App() {
 
   return (
     <main className={`app-shell density-${density} theme-${theme}`}>
-      <Sidebar activeView={activeView} onNavigate={setActiveView} onSignOut={jobFlow.signOut} />
+      <Sidebar activeView={activeView} onNavigate={setActiveView} onSignOut={confirmSignOut} />
       <section className="workspace">
         {!["queues", "workers", "settings"].includes(activeView) && (
           <Topbar title={viewTitle} user={jobFlow.user} loading={jobFlow.loading} onRefresh={jobFlow.refresh} />
         )}
         <Toast notice={jobFlow.notice} error={jobFlow.error} onClear={() => { jobFlow.setNotice(""); jobFlow.setError(""); }} />
 
-        {activeView === "dashboard" && <DashboardView {...jobFlow} />}
-        {activeView === "jobs" && <JobsView {...jobFlow} />}
+        {activeView === "dashboard" && <DashboardView {...jobFlow} requestConfirm={requestConfirm} />}
+        {activeView === "jobs" && <JobsView {...jobFlow} requestConfirm={requestConfirm} />}
         {activeView === "queues" && <QueuesView {...jobFlow} />}
         {activeView === "workers" && <WorkersView {...jobFlow} />}
         {activeView === "settings" && (
@@ -72,6 +105,17 @@ export function App() {
           />
         )}
       </section>
+      <ConfirmDialog
+        open={Boolean(confirm)}
+        title={confirm?.title}
+        message={confirm?.message}
+        confirmLabel={confirm?.confirmLabel}
+        cancelLabel={confirm?.cancelLabel}
+        variant={confirm?.variant}
+        busy={confirmBusy}
+        onCancel={closeConfirm}
+        onConfirm={runConfirmAction}
+      />
     </main>
   );
 }
