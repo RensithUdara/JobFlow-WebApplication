@@ -41,7 +41,7 @@ func main() {
 		queue.NewRedisQueue(redisClient),
 		repository.NewJobRepository(db),
 		repository.NewWorkerRepository(db),
-		realtime.NewBroker(),
+		realtime.NewRedisPublisher(redisClient),
 	)
 
 	log.Printf("JobFlow worker listening to %v with %d goroutines", cfg.WorkerQueues, cfg.WorkerCount)
