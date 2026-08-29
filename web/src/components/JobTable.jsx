@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Download, RotateCcw, Trash2 } from "lucide-react";
 import { statusOptions } from "../data/jobTemplates.js";
 import { StatusBadge } from "./StatusBadge.jsx";
+import { jobDisplayName, queueDisplayName } from "../utils/format.js";
 
 export function JobTable({
   jobs,
@@ -10,6 +11,7 @@ export function JobTable({
   onSelect,
   onRetry,
   onCancel,
+  onConfirm,
   filters,
   onFiltersChange,
   onExport,
@@ -40,10 +42,33 @@ export function JobTable({
   }
 
   async function bulkCancel() {
-    for (const job of selectedJobs) {
-      await onCancel(job);
-    }
-    setSelectedIds([]);
+    if (!selectedJobs.length) return;
+
+    onConfirm({
+      title: "Cancel selected jobs?",
+      message: `${selectedJobs.length} selected job${selectedJobs.length === 1 ? "" : "s"} will be cancelled and removed from active processing.`,
+      confirmLabel: "Cancel jobs",
+      variant: "danger",
+      onConfirm: async () => {
+        for (const job of selectedJobs) {
+          await onCancel(job);
+        }
+        setSelectedIds([]);
+      },
+    });
+  }
+
+  function confirmCancel(job) {
+    onConfirm({
+      title: "Cancel this job?",
+      message: `${jobDisplayName(job)} will be stopped and marked as cancelled.`,
+      confirmLabel: "Cancel job",
+      variant: "danger",
+      onConfirm: async () => {
+        await onCancel(job);
+        setSelectedIds((current) => current.filter((id) => id !== job.id));
+      },
+    });
   }
 
   return (
@@ -57,7 +82,7 @@ export function JobTable({
         </div>
       </div>
       <div className="toolbar">
-        <input placeholder="Search type, queue, status, id" value={filters.query} onChange={(event) => onFiltersChange({ ...filters, query: event.target.value })} />
+        <input placeholder="Search type, queue, status" value={filters.query} onChange={(event) => onFiltersChange({ ...filters, query: event.target.value })} />
         <select value={filters.status} onChange={(event) => onFiltersChange({ ...filters, status: event.target.value })}>
           {statusOptions.map((status) => <option key={status}>{status}</option>)}
         </select>
@@ -79,19 +104,19 @@ export function JobTable({
       <div className="job-table">
         <div className="row head">
           <span><input type="checkbox" checked={allPageSelected} onChange={togglePage} /></span>
-          <span>Type</span><span>Queue</span><span>Status</span><span>Priority</span><span>Attempts</span><span></span>
+          <span>Job Name</span><span>Queue</span><span>Status</span><span>Priority</span><span>Attempts</span><span></span>
         </div>
         {jobs.map((job) => (
           <button className={`row ${selectedJob?.id === job.id ? "selected" : ""}`} key={job.id} onClick={() => onSelect(job)}>
             <span onClick={(event) => event.stopPropagation()}><input type="checkbox" checked={selectedIds.includes(job.id)} onChange={() => toggleJob(job.id)} /></span>
-            <span>{job.type}</span>
-            <span>{job.queue}</span>
+            <span>{jobDisplayName(job)}</span>
+            <span>{queueDisplayName(job.queue)}</span>
             <StatusBadge status={job.status} />
             <span>{job.priority}</span>
             <span>{job.attempts} / {job.max_attempts}</span>
             <span className="actions">
               <RotateCcw size={15} onClick={(event) => { event.stopPropagation(); onRetry(job); }} />
-              <Trash2 size={15} onClick={(event) => { event.stopPropagation(); onCancel(job); }} />
+              <Trash2 size={15} onClick={(event) => { event.stopPropagation(); confirmCancel(job); }} />
             </span>
           </button>
         ))}
