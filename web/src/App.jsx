@@ -56,7 +56,7 @@ export function App() {
         {activeView === "dashboard" && <DashboardView {...jobFlow} />}
         {activeView === "jobs" && <JobsView {...jobFlow} />}
         {activeView === "queues" && <QueuesView stats={jobFlow.stats} />}
-        {activeView === "workers" && <WorkersView stats={jobFlow.stats} />}
+        {activeView === "workers" && <WorkersView {...jobFlow} />}
         {activeView === "settings" && (
           <SettingsView
             density={density}
