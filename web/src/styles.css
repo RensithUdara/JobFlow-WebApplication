@@ -497,12 +497,12 @@ button.row:hover, button.row.selected { background: #edf8f5; }
 }
 .detail-panel dt { color: #52708a; }
 .detail-panel dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-.timeline { grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 12px 0; }
+.timeline { grid-template-columns: 1fr; margin: 12px 0; }
 .timeline-step {
-  min-height: 64px;
+  min-height: 54px;
   padding: 8px;
   display: grid;
-  grid-template-columns: 30px 1fr;
+  grid-template-columns: 30px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
 }
@@ -517,8 +517,16 @@ button.row:hover, button.row.selected { background: #edf8f5; }
 }
 .timeline-step.done > span { background: #dff6e9; color: #1f7a4e; }
 .timeline-step div { display: grid; gap: 2px; min-width: 0; }
-.timeline-step strong { font-size: 13px; }
-.timeline-step small { color: #607d98; overflow-wrap: anywhere; }
+.timeline-step strong {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.timeline-step small {
+  color: #607d98;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .queue-list, .worker-grid, .event-list { display: grid; gap: 10px; }
 .queue-card, .worker-card, .event-row, .dlq-card { padding: 12px; }
