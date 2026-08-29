@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"strings"
 	"time"
 
 	"jobflow/internal/model"
@@ -21,12 +22,25 @@ func NewAuthService(users *repository.UserRepository, secret string) *AuthServic
 	return &AuthService{users: users, jwtSecret: []byte(secret)}
 }
 
-func (s *AuthService) Register(ctx context.Context, email, password string) (model.User, string, error) {
+func (s *AuthService) Register(ctx context.Context, name, email string, company *string, password string) (model.User, string, error) {
+	name = strings.TrimSpace(name)
+	email = strings.TrimSpace(strings.ToLower(email))
+	if name == "" {
+		return model.User{}, "", errors.New("name is required")
+	}
+	if company != nil {
+		cleanCompany := strings.TrimSpace(*company)
+		if cleanCompany == "" {
+			company = nil
+		} else {
+			company = &cleanCompany
+		}
+	}
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return model.User{}, "", err
 	}
-	user, err := s.users.Create(ctx, email, string(hash))
+	user, err := s.users.Create(ctx, name, email, company, string(hash))
 	if err != nil {
 		return model.User{}, "", err
 	}
@@ -48,6 +62,7 @@ func (s *AuthService) Login(ctx context.Context, email, password string) (model.
 
 func (s *AuthService) Token(user model.User) (string, error) {
 	claims := jwt.MapClaims{
+		"name":  user.Name,
 		"sub":   user.ID,
 		"email": user.Email,
 		"exp":   time.Now().Add(24 * time.Hour).Unix(),
