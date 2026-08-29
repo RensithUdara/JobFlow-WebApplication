@@ -14,6 +14,7 @@ export function App() {
   const jobFlow = useJobFlow();
   const [activeView, setActiveView] = useState("dashboard");
   const [density, setDensity] = useState(localStorage.getItem("jobflow_density") || "comfortable");
+  const [theme, setTheme] = useState(localStorage.getItem("jobflow_theme") || "light");
 
   const viewTitle = useMemo(() => ({
     dashboard: "Operations Dashboard",
@@ -26,6 +27,11 @@ export function App() {
   function changeDensity(nextDensity) {
     localStorage.setItem("jobflow_density", nextDensity);
     setDensity(nextDensity);
+  }
+
+  function changeTheme(nextTheme) {
+    localStorage.setItem("jobflow_theme", nextTheme);
+    setTheme(nextTheme);
   }
 
   if (!jobFlow.authed) {
@@ -41,7 +47,7 @@ export function App() {
   }
 
   return (
-    <main className={`app-shell density-${density}`}>
+    <main className={`app-shell density-${density} theme-${theme}`}>
       <Sidebar activeView={activeView} onNavigate={setActiveView} onSignOut={jobFlow.signOut} />
       <section className="workspace">
         <Topbar title={viewTitle} user={jobFlow.user} loading={jobFlow.loading} onRefresh={jobFlow.refresh} />
@@ -52,7 +58,14 @@ export function App() {
         {activeView === "queues" && <QueuesView stats={jobFlow.stats} />}
         {activeView === "workers" && <WorkersView stats={jobFlow.stats} />}
         {activeView === "settings" && (
-          <SettingsView density={density} onDensityChange={changeDensity} stats={jobFlow.stats} onExport={() => jobFlow.exportJobs()} />
+          <SettingsView
+            density={density}
+            theme={theme}
+            onDensityChange={changeDensity}
+            onThemeChange={changeTheme}
+            stats={jobFlow.stats}
+            onExport={() => jobFlow.exportJobs()}
+          />
         )}
       </section>
     </main>
