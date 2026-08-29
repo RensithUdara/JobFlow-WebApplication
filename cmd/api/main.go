@@ -38,12 +38,13 @@ func main() {
 	defer redisClient.Close()
 
 	events := realtime.NewBroker()
+	go events.SubscribeRedis(ctx, redisClient)
 	users := repository.NewUserRepository(db)
 	jobs := repository.NewJobRepository(db)
 	workers := repository.NewWorkerRepository(db)
 	redisQueue := queue.NewRedisQueue(redisClient)
 	authSvc := service.NewAuthService(users, cfg.JWTSecret)
-	jobSvc := service.NewJobService(jobs, workers, redisQueue, events, cfg.WorkerQueues)
+	jobSvc := service.NewJobService(jobs, workers, redisQueue, realtime.NewRedisPublisher(redisClient), cfg.WorkerQueues)
 
 	go func() {
 		ticker := time.NewTicker(cfg.SchedulerInterval)
