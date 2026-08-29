@@ -56,10 +56,10 @@ export function JobComposer({ onCreate }) {
       <form onSubmit={submit}>
         <div className="form-grid">
           <label>Type<select value={type} onChange={(event) => chooseTemplate(event.target.value)}>
-            {types.map((item) => <option key={item}>{item}</option>)}
+            {types.map((item) => <option key={item} value={item}>{jobTemplates[item].label}</option>)}
           </select></label>
           <label>Queue<select value={queue} onChange={(event) => setQueue(event.target.value)}>
-            {queueOptions.map((item) => <option key={item}>{item}</option>)}
+            {queueOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
           </select></label>
           <label>Priority <span>{priority}</span><input type="range" min="0" max="10" value={priority} onChange={(event) => setPriority(event.target.value)} /></label>
           <label>Max attempts<input type="number" min="1" max="10" value={maxAttempts} onChange={(event) => setMaxAttempts(event.target.value)} /></label>
