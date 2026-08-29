@@ -41,7 +41,10 @@ button:focus-visible {
 }
 
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand.large { margin-bottom: 24px; }
+.brand.large {
+  justify-content: center;
+  margin-bottom: 20px;
+}
 .brand-mark {
   width: 38px;
   height: 38px;
@@ -51,6 +54,23 @@ button:focus-visible {
   background: linear-gradient(135deg, #1fe28b, #10a870);
   color: #ffffff;
   box-shadow: 0 14px 28px rgba(10, 146, 94, .28);
+}
+.brand-logo-mark {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background-image: url("/jobflow-logo.png");
+  background-size: 255%;
+  background-position: center 25%;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  box-shadow: 0 14px 28px rgba(10, 146, 94, .28);
+}
+.brand-logo-full {
+  width: min(250px, 86%);
+  display: block;
+  border-radius: 8px;
 }
 .brand h1 { margin: 0; font-size: 19px; letter-spacing: 0; }
 .brand span { display: block; margin-top: 2px; color: #b6cbc6; font-size: 11px; }
