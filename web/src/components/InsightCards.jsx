@@ -1,5 +1,6 @@
 import React from "react";
 import { Clock3, Flame, RadioTower, TimerReset } from "lucide-react";
+import { queueDisplayName } from "../utils/format.js";
 
 export function InsightCards({ jobs, stats }) {
   const waiting = (stats?.queues || []).reduce((sum, queue) => sum + queue.waiting, 0);
@@ -10,7 +11,7 @@ export function InsightCards({ jobs, stats }) {
   const cards = [
     { label: "Queue depth", value: waiting, icon: Flame },
     { label: "Newest job", value: newest, icon: Clock3 },
-    { label: "Hot queue", value: hottestQueue?.name || "None", icon: RadioTower },
+    { label: "Hot queue", value: hottestQueue ? queueDisplayName(hottestQueue.name) : "None", icon: RadioTower },
     { label: "Retry load", value: retryLoad, icon: TimerReset },
   ];
 
