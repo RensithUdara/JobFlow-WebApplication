@@ -50,7 +50,9 @@ export function App() {
     <main className={`app-shell density-${density} theme-${theme}`}>
       <Sidebar activeView={activeView} onNavigate={setActiveView} onSignOut={jobFlow.signOut} />
       <section className="workspace">
-        <Topbar title={viewTitle} user={jobFlow.user} loading={jobFlow.loading} onRefresh={jobFlow.refresh} />
+        {!["workers", "settings"].includes(activeView) && (
+          <Topbar title={viewTitle} user={jobFlow.user} loading={jobFlow.loading} onRefresh={jobFlow.refresh} />
+        )}
         <Toast notice={jobFlow.notice} error={jobFlow.error} onClear={() => { jobFlow.setNotice(""); jobFlow.setError(""); }} />
 
         {activeView === "dashboard" && <DashboardView {...jobFlow} />}
