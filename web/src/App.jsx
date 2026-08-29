@@ -65,6 +65,8 @@ export function App() {
             onThemeChange={changeTheme}
             stats={jobFlow.stats}
             onExport={() => jobFlow.exportJobs()}
+            onRefresh={jobFlow.refresh}
+            loading={jobFlow.loading}
           />
         )}
       </section>
