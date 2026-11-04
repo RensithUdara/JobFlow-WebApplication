@@ -1,6 +1,7 @@
-.env
 *.exe
 *.test
 
 web/node_modules/
 web/dist/
+config.bat
+node_modules
