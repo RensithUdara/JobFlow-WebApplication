@@ -3,5 +3,8 @@
 
 web/node_modules/
 web/dist/
-config.bat
 node_modules
+.env
+.env.example
+.env.local
+.env.production
